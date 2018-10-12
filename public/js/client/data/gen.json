@@ -1,0 +1,32 @@
+{
+    "mapName": "gen",
+    "locations": {
+        "paths": [
+            {
+                "id": "path27228",
+                "employees": [
+                    {
+                        "name": "Simon Marcoux",
+                        "group": "GEN",
+                        "job": "Développeur Web"
+                    }
+                ]
+            },
+            {
+                "id": "path31282",
+                "employees": [
+                    {
+                        "name": "Francois Perreault",
+                        "group": "GEN",
+                        "job": "Développeur Web"
+                    },
+                    {
+                        "name": "Louis-Philippe Favreau",
+                        "group": "GEN",
+                        "job": "Directeur"
+                    }
+                ]
+            }
+        ]
+    }
+}
