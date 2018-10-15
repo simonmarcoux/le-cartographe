@@ -1,4 +1,5 @@
 import AbstractDispatcher from "./AbstractDispatcher.js";
+import { EventType } from "./events/EventType.js";
 
 export default class Map extends AbstractDispatcher {
     
@@ -6,18 +7,13 @@ export default class Map extends AbstractDispatcher {
         super();
 
         this.map = document.querySelector('.map-wrp .svg');
-        // this.defaultViewBox = this.map.getAttribute('viewBox');
-        // this.activeViewBox = this.defaultViewBox;
-        this.tl = new TimelineMax();
-        this.zoomConfig = {
-            in: 0.9, 
-            out: 1.1
-        }
 
         this.handlePathClick(this.getPaths());
         this.initZoomHandler();
+    }
 
-        this.addListener('DATA_LOADED', this.placeElements);
+    getMapName(name) {
+        document.querySelector('[data-ui="map-name"]').innerHTML = name;
     }
     
     getPaths() {
@@ -28,13 +24,15 @@ export default class Map extends AbstractDispatcher {
         for (let i = 0; i < paths.length; i++) {
             const path = paths[i];
             path.addEventListener('click', e => {
-                console.log('click on path', e.currentTarget)
-                this.dispatch({ type: 'ADD_DESK', el: e.currentTarget });
-
-                let id = e.currentTarget.id;
-                document.querySelector('.number').innerHTML = id;
+                const activeEl = this.map.querySelector('.active');
+                if (activeEl && (activeEl !== e.currentTarget)) {
+                    activeEl.classList.remove('active');
+                }
                 e.currentTarget.classList.toggle('active');
 
+
+                let isActive = e.currentTarget.classList.contains('active');
+                this.dispatch({ type: EventType.CLICK, el: e.currentTarget, isActive: isActive });
             }); 
         }
     }
@@ -44,13 +42,12 @@ export default class Map extends AbstractDispatcher {
     }
 
     placeElements(data) {
-        console.log(data.locations, data.mapName);
         let locations = data.locations;
 
         for (const location in locations) {
             if (locations.hasOwnProperty(location)) {
-                const element = locations[location];
-                console.log(element);
+                const data = locations[location];
+                this.dispatch({type: EventType.ADD_DESK, data: data });
             }
         }
     }
