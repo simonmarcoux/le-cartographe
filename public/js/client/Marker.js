@@ -36,3 +36,7 @@ export default class Marker {
     //     this.add(coords)
     // }
 }
+
+
+// svg path creation ? with a grid on top of the map
+// https://codepen.io/anthonydugois/pen/mewdyZ

@@ -17,7 +17,7 @@ export default class Main {
         loadMap('gen')
         .then((data) => {
             // json is loaded, get all items
-            console.log(data);
+            this.map.placeElements(data);
         })
     }
 }

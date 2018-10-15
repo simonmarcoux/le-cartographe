@@ -14,7 +14,8 @@
     "http": "0.0.0",
     "pixi.js": "^4.8.2",
     "serve": "^9.6.0",
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.1.1",
+    "svg-pan-zoom": "github:ariutta/svg-pan-zoom"
   },
   "devDependencies": {
     "ws": "^6.0.0"

@@ -1,0 +1,44 @@
+body {
+    margin:0;
+    font-family: 'Lato', sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Oswald', sans-serif;
+}
+
+path {
+    fill: white !important;
+    
+}
+path:hover {
+    fill: #eeeeee !important;
+}
+path.active {
+    fill: red !important;
+}
+
+.sections {
+    display: flex;
+}
+
+.map-wrp {
+    border: 3px solid black;
+    height: 100%;
+}
+ 
+.map-wrp svg {
+    height: 100% !important;
+}
+
+.map-details {
+    background-color: #002f84;
+    color: white;
+    padding: 20px;
+    width: 100%;
+}
+
+.details-inner {
+    position: sticky;
+    top: 0;
+}

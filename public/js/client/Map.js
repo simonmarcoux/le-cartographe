@@ -5,9 +5,9 @@ export default class Map extends AbstractDispatcher {
     constructor() {
         super();
 
-        this.map = document.querySelector('.map-wrp svg');
-        this.defaultViewBox = this.map.getAttribute('viewBox');
-        this.activeViewBox = this.defaultViewBox;
+        this.map = document.querySelector('.map-wrp .svg');
+        // this.defaultViewBox = this.map.getAttribute('viewBox');
+        // this.activeViewBox = this.defaultViewBox;
         this.tl = new TimelineMax();
         this.zoomConfig = {
             in: 0.9, 
@@ -15,11 +15,13 @@ export default class Map extends AbstractDispatcher {
         }
 
         this.handlePathClick(this.getPaths());
-        this.handleZoom();
+        this.initZoomHandler();
+
+        this.addListener('DATA_LOADED', this.placeElements);
     }
     
     getPaths() {
-        return document.querySelectorAll('path');
+        return this.map.querySelectorAll('path');
     }
     
     handlePathClick(paths) {
@@ -33,50 +35,23 @@ export default class Map extends AbstractDispatcher {
                 document.querySelector('.number').innerHTML = id;
                 e.currentTarget.classList.toggle('active');
 
-            });
-            
+            }); 
         }
-
     }
 
-    handleZoom() {
-        // inspiration -> https://codepen.io/PointC/pen/XbqBmM
-        const zoomInBtn = document.querySelector('[data-ui="zoom-in"]');
-        const zoomOutBtn = document.querySelector('[data-ui="zoom-out"]');
-        
-
-        zoomInBtn.addEventListener('click', () => {
-            this.zoom('zoomin');
-        });
-
-        zoomOutBtn.addEventListener('click', () => {
-            this.zoom('zoomout');
-        });
+    initZoomHandler() {
+        const panZoomMap = window.svgPanZoom(this.map)
     }
 
-    calculateZoom(direction) {
-        let valuesArr = this.defaultViewBox.split(" ");
-        let newValues = [];
-        let zoomValue = direction === 'zoomin' ? this.zoomConfig.in : this.zoomConfig.out;
+    placeElements(data) {
+        console.log(data.locations, data.mapName);
+        let locations = data.locations;
 
-        valuesArr.forEach(val => {
-            let viewBoxValue = val * zoomValue;
-            newValues.push(viewBoxValue);
-        });
-
-        return newValues;
+        for (const location in locations) {
+            if (locations.hasOwnProperty(location)) {
+                const element = locations[location];
+                console.log(element);
+            }
+        }
     }
-    
-    
-    
-    zoom(direction) {
-        let values = this.calculateZoom(direction);
-        this.activeViewBox = values.join(" ");
-        this.animateZoom();
-    }
-    
-    animateZoom() {
-        this.tl.to(this.map, 1.5, { attr: { viewBox: this.activeViewBox } });
-    }
-    
 }
