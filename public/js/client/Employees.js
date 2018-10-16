@@ -1,19 +1,24 @@
 import AbstractDispatcher from "./AbstractDispatcher.js";
 import { EventType } from "./events/EventType.js";
 
-export class EmployeesList {
-    constructor() {
-        this.list = [];
-    }
 
-    addEmployee(employee) {
-        this.list.push(employee);
-    }
+// List used only as a repertory for search 
+// export class EmployeesList {
+//     constructor() {
+//         this.list = [];
 
-    getEmployees() {
-        return this.list;
-    }
-}
+//         this.addEmployee = this.addEmployee.bind(this);
+//     }
+
+//     addEmployee(e) {
+//         console.log('list', e);
+//         this.list.push(employee);
+//     }
+
+//     getEmployees() {
+//         return this.list;
+//     }
+// }
 
 export class Employee extends AbstractDispatcher {
     constructor(deskId, config) {

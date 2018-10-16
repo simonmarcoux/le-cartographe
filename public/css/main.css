@@ -9,7 +9,7 @@ h1, h2, h3, h4, h5 {
 
 path {
     fill: white !important;
-    pointer-events: none;   
+    /* pointer-events: none;    */
 }
 
 path.has-users {

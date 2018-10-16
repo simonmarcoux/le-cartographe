@@ -17,8 +17,12 @@ export default class CardsManager {
         users.forEach(user => {
             this.addCard(user)
         });
-
+        
         console.log('test', this.cardsList);
+    }
+    
+    updateFromSearch(e) {
+        console.log('update from search', e);
     }
     
     addCard(user) {

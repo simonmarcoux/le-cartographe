@@ -1,16 +1,7 @@
 import AbstractDispatcher from "./AbstractDispatcher.js";
-import { Vec2 } from "./Math.js";
 import { Employee } from "./Employees.js";
 // import InfoCards from "./InfoCard.js";
 import { EventType } from "./events/EventType.js";
-
-
-// const groups = {
-//     GEN: Symbol('gen'),
-//     G1: Symbol('g1'),
-//     G2: Symbol('g2'),
-//     DESIGN: Symbol('design'),
-// }
 
 export class DesksManager extends AbstractDispatcher {
     constructor() {
@@ -21,6 +12,8 @@ export class DesksManager extends AbstractDispatcher {
         // Bind methods to class
         this.addDesk = this.addDesk.bind(this);
         this.getClickedDesk = this.getClickedDesk.bind(this);
+        this.getDeskFromSearch = this.getDeskFromSearch.bind(this);
+        this.getDeskFromID = this.getDeskFromID.bind(this);
     }
 
     addDesk(e) {
@@ -30,18 +23,29 @@ export class DesksManager extends AbstractDispatcher {
     removeDesk(el) {
         let index = this.desksArr.indexOf(el);
         if (index > -1) {
-            this.desksArr.splice(index, 1)
+            this.desksArr.splice(index, 1);
         }
     }
 
     getClickedDesk(e) {
+        this.getDeskFromID(e.el.id, EventType.CLICK);
+
+    }
+    
+    getDeskFromSearch(e) {
+        console.log(e);
+        this.getDeskFromID(e.search.pathID, EventType.SEARCH);
+    }
+
+    getDeskFromID(id, eventType) {
         this.desksArr.forEach(desk => {
+            console.log('searching,', desk, event, id);
             let deskID = desk.id;
-            if (deskID.indexOf(e.el.id, 0) !== -1) {
-                this.dispatch({type: EventType.CLICK, users: desk.users });
+            if (deskID.indexOf(id, 0) !== -1) {
+                this.dispatch({type: eventType, users: desk.users });
                 return desk;
             }
-        })
+        });
     }
 
     get desks() {
@@ -57,7 +61,6 @@ export class Desk extends AbstractDispatcher {
         this.users = [];
 
         this.getUsersFromData(config.data.employees);
-
         document.querySelector('svg #' + this.id).classList.add('has-users');
     }
 
@@ -65,6 +68,7 @@ export class Desk extends AbstractDispatcher {
         employees.forEach(employee => {
             let user = new Employee(this.id, employee);
             this.users.push(user);
+            // this.dispatch({ type: EventType.NEW_EMPLOYEES, employee: user });
         });
     }
 
