@@ -17,6 +17,8 @@ export class DesksManager extends AbstractDispatcher {
     }
 
     addDesk(e) {
+        console.log(e);
+        
         this.desksArr.push(new Desk(e));
     }
 
@@ -61,19 +63,21 @@ export class Desk extends AbstractDispatcher {
     constructor(config) {
         super();
 
-        this.id = config.data.pathID;
+        this.id = config.pathID;
         this.users = [];
 
-        this.getUsersFromData(config.data.employees);
+        this.getUsersFromData(config);
         document.querySelector('svg #' + this.id).classList.add('has-users');
     }
 
     getUsersFromData(employees) {
-        employees.forEach(employee => {
+        // employees.forEach(employee => {
+            if (config.pathID === null) return;
+
             let user = new Employee(this.id, employee);
             this.users.push(user);
             // this.dispatch({ type: EventType.NEW_EMPLOYEES, employee: user });
-        });
+        // });
     }
 
     getUsers() {

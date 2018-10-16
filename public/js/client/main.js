@@ -20,6 +20,7 @@ export default class Main extends AbstractDispatcher {
         loadMap('gen')
         .then((data) => {
             // json is loaded, get all items
+            console.log(data);
             this.map.placeElements(data);
             this.map.getMapName(data.mapName);
             this.search.init(document.querySelector('.search'), data);
@@ -34,7 +35,7 @@ export default class Main extends AbstractDispatcher {
         
         // Events trigger on search
         this.search.addListener(EventType.SEARCH, this.deskManager.getDesksFromSearch);
-        this.deskManager.addListener(EventType.EventType.CLEAR, this.cardsManager.cleanList);
+        this.deskManager.addListener(EventType.CLEAR, this.cardsManager.cleanList);
         this.deskManager.addListener(EventType.SEARCH, this.cardsManager.updateFromSearch);
     }
 }
