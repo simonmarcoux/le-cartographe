@@ -1,0 +1,33 @@
+{
+    "mapName": "lg2",
+    "employees": [
+        {
+            "name": "Simon Marcoux",
+            "group": "GEN",
+            "job": "Développeur Web",
+            "pathID": "path27228"
+        },
+        {
+            "name": "Francois Perreault",
+            "group": "GEN",
+            "job": "Développeur Web",
+            "pathID": "path31282"
+        },
+        {
+            "name": "Louis-Philippe Favreau",
+            "group": "GEN",
+            "job": "Directeur",
+            "pathID": "path31282"
+        }
+    ],
+    "marker": {
+        "id": 1,
+        "name": "Nom du marqueur",
+        "pos": [5.5, 2.5]
+    },
+    "path": {
+        "points": [
+            [0,0], [0, 5], [10, 5]
+        ]
+    }
+}

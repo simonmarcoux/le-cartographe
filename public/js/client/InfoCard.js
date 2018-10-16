@@ -49,7 +49,6 @@ class EmployeeCard {
 
         let template = `
             <div class="card--item">
-
                 ${this.infos.name}, ${this.infos.group}, ${this.infos.job}
             </div>
         `;

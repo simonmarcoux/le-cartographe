@@ -12,7 +12,7 @@ export class DesksManager extends AbstractDispatcher {
         // Bind methods to class
         this.addDesk = this.addDesk.bind(this);
         this.getClickedDesk = this.getClickedDesk.bind(this);
-        this.getDeskFromSearch = this.getDeskFromSearch.bind(this);
+        this.getDesksFromSearch = this.getDesksFromSearch.bind(this);
         this.getDeskFromID = this.getDeskFromID.bind(this);
     }
 
@@ -32,9 +32,13 @@ export class DesksManager extends AbstractDispatcher {
 
     }
     
-    getDeskFromSearch(e) {
-        console.log(e);
-        this.getDeskFromID(e.search.pathID, EventType.SEARCH);
+    getDesksFromSearch(e) {
+        let searchResults = e.search;
+
+        this.dispatch({type: EventType.CLEAR });
+        searchResults.forEach(desk => {
+            this.getDeskFromID(desk.pathID, EventType.SEARCH);
+        });
     }
 
     getDeskFromID(id, eventType) {
