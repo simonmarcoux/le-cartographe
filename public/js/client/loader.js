@@ -25,11 +25,5 @@ export async function loadJSON(url) {
 }
 
 export function loadMap(name) {
-
-    
-    console.log(name);
     return loadJSON(`js/client/data/${name}.json`)
-    // .then((data) => {
-        // console.log(data, 'map infos are loaded, get all items');
-    // })
 }

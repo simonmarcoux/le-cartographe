@@ -24,15 +24,16 @@ export default class Map extends AbstractDispatcher {
         for (let i = 0; i < paths.length; i++) {
             const path = paths[i];
             path.addEventListener('click', e => {
+                if (e.currentTarget.classList.contains('active')) return;
+                
                 const activeEl = this.map.querySelector('.active');
-                if (activeEl && (activeEl !== e.currentTarget)) {
+                if (activeEl && activeEl !== e.currentTarget) {
                     activeEl.classList.remove('active');
                 }
                 e.currentTarget.classList.toggle('active');
-
-
-                let isActive = e.currentTarget.classList.contains('active');
-                this.dispatch({ type: EventType.CLICK, el: e.currentTarget, isActive: isActive });
+                
+                // let isActive = e.currentTarget.classList.contains('active');
+                this.dispatch({ type: EventType.CLICK, el: e.currentTarget });
             }); 
         }
     }
@@ -43,8 +44,8 @@ export default class Map extends AbstractDispatcher {
 
     placeElements(data) {
         data.forEach(employee => {
-            console.log(employee);
-            this.dispatch({type: EventType.ADD_DESK, data: employee });
+            // this.dispatch({type: EventType.ADD_DESK, data: employee });
+            this.dispatch({type: EventType.ADD_EMPLOYEE, data: employee });
         });
         // let locations = data.locations;
 

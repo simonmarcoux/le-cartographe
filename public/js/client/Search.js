@@ -16,13 +16,13 @@ export default class Search extends AbstractDispatcher {
             maxPatternLength: 32,
             minMatchCharLength: 3,
             // keys: this.fuseKeySearch,
-            keys: ['employees.name', 'employees.group', 'employees.job'],
+            keys: ['name', 'groupe.label', 'job'],
         };   
     }
     
     init(form, data) {
         this.form = form;
-        this.fuse = new Fuse(data.locations, this.options);
+        this.fuse = new Fuse(data, this.options);
         
         this.form.addEventListener('submit', e => {
             e.preventDefault();

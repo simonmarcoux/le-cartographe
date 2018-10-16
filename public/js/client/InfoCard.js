@@ -5,7 +5,9 @@ export default class CardsManager {
         this.cardsList = [];
         
         this.update = this.update.bind(this);
-        console.log(el);
+        this.updateFromSearch = this.updateFromSearch.bind(this);
+        this.cleanList = this.cleanList.bind(this);
+        // console.log(el);
     }
     
     
@@ -18,11 +20,15 @@ export default class CardsManager {
             this.addCard(user)
         });
         
-        console.log('test', this.cardsList);
+        // console.log('test', this.cardsList);
     }
     
     updateFromSearch(e) {
         console.log('update from search', e);
+        this.addCard(e.users[0]);
+        // e.users.forEach(user => {
+        //     this.addCard(user);
+        // })
     }
     
     addCard(user) {
@@ -35,8 +41,10 @@ export default class CardsManager {
     }
 
     cleanList() {
-        this.cardsList.length = 0;
-        this.el.innerHTML = "";
+        if (this.cardsList && this.el) {
+            this.cardsList.length = 0;
+            this.el.innerHTML = "";
+        }
     }
 }
 
@@ -44,8 +52,7 @@ class EmployeeCard {
     constructor(infos) {
         this.infos = infos;
 
-        console.log('infos', infos);
-        
+        // console.log('infos', infos);
 
         let template = `
             <div class="card--item">
