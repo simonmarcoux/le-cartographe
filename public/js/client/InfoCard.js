@@ -7,7 +7,6 @@ export default class CardsManager {
         this.update = this.update.bind(this);
         this.updateFromSearch = this.updateFromSearch.bind(this);
         this.cleanList = this.cleanList.bind(this);
-        // console.log(el);
     }
     
     
@@ -19,12 +18,9 @@ export default class CardsManager {
         users.forEach(user => {
             this.addCard(user)
         });
-        
-        // console.log('test', this.cardsList);
     }
     
     updateFromSearch(e) {
-        console.log(e);
         e.users.forEach(user => {
             this.addCard(user);
         })
@@ -51,8 +47,6 @@ class EmployeeCard {
     constructor(infos) {
         this.infos = infos;
 
-        // console.log('infos', infos);
-
         let template = `
             <div class="card--item">
                 ${this.infos.name}, ${this.infos.group}, ${this.infos.job}
@@ -64,5 +58,3 @@ class EmployeeCard {
         document.querySelector('.cards').appendChild(item);
     }
 }
-
-// NOTE: Can be multiple employees per desk, so one card per employee 
