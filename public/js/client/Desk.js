@@ -20,17 +20,28 @@ export class DesksManager extends AbstractDispatcher {
     addDesk(e) {
         if (e.id === null) return;
 
+        console.log('length', this.desksArr.length, e);
         if (this.desksArr.length === 0) {
+            console.log('first desk')
             this.desksArr.push(new Desk(e.employee));
         } else {
-            this.desksArr.forEach((desk, index) => {
-                if (desk.id === e.id) {
-                    // add user to existing desk
-                    this.desksArr[index].addUser(e.employee);
-                } else {
-                    this.desksArr.push(new Desk(e.employee));
-                }
-            });
+            let deskIndex = this.desksArr.findIndex(x => x.id === e.id);
+            if (deskIndex !== -1) {
+                this.desksArr[deskIndex].addUser(e.employee);
+            } else {
+                this.desksArr.push(new Desk(e.employee));
+            }
+            // this.desksArr.forEach((desk, index) => {
+            //     console.log('does desk exist ?', this.desksArr, desk.id, e.id);
+            //     if (desk.id === e.id) {
+            //         console.log('add user to desk')
+            //         // add user to existing desk
+            //         this.desksArr[index].addUser(e.employee);
+            //     } else {
+            //         console.log('create desk')
+            //         this.desksArr.push(new Desk(e.employee));
+            //     }
+            // });
         }
     }
 
@@ -61,19 +72,15 @@ export class DesksManager extends AbstractDispatcher {
                 this.desksSearched.push(user.pathID);
             }
         });
-
-        // searchResults.forEach(desk => {
-        //     console.log('search results', desk, e);
-        //     if (e.pathID !== null) this.getDeskFromID(desk.pathID, EventType.SEARCH);
-        // });
     }
 
     getDeskFromID(id, eventType, highlight = false) {
         this.desksArr.forEach(desk => {
             let deskID = desk.id;
-            if (deskID.indexOf(id, 0) !== -1) {
+            if (deskID.indexOf(id) !== -1) {
+                console.log(desk.users)
                 this.dispatch({type: eventType, users: desk.users });
-                
+
                 if (highlight) {
                     desk.el.classList.add('active');
                 }

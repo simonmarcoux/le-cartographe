@@ -37,14 +37,18 @@ export default class Main extends AbstractDispatcher {
         this.deskManager.addListener(EventType.CLICK, this.cardsManager.update);
         
         // Events trigger on search
-        this.search.addListener(EventType.SEARCH, this.deskManager.getDesksFromSearch);
+        // this.search.addListener(EventType.SEARCH, this.deskManager.getDesksFromSearch);
         // this.search.addListener(EventType.SEARCH, this.map.clearHighlight);
-        // this.search.addListener(EventType.SEARCH, (e) => {
-        //     this.deskManager.getDesksFromSearch(e);
-        //     this.map.clearHighlight();
-        // });
+        this.search.addListener(EventType.SEARCH, (e) => {
+            this.deskManager.getDesksFromSearch(e);
+            this.map.clearHighlight();
+        });
         this.deskManager.addListener(EventType.CLEAR, this.cardsManager.cleanList);
         this.deskManager.addListener(EventType.SEARCH, this.cardsManager.updateFromSearch);
+
+        setTimeout(() => {
+            console.log(this.deskManager.desks);
+        }, 5000);
     }
 }
 

@@ -24,6 +24,7 @@ export default class CardsManager {
     }
     
     updateFromSearch(e) {
+        console.log(e);
         e.users.forEach(user => {
             this.addCard(user);
         })
