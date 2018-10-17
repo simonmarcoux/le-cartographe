@@ -15,7 +15,6 @@ export default class Search extends AbstractDispatcher {
             distance: 200,
             maxPatternLength: 32,
             minMatchCharLength: 3,
-            // keys: this.fuseKeySearch,
             keys: ['name', 'groupe.label', 'job'],
         };   
     }

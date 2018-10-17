@@ -47,16 +47,7 @@ export default class Map extends AbstractDispatcher {
 
     placeElements(data) {
         data.forEach(employee => {
-            // this.dispatch({type: EventType.ADD_DESK, data: employee });
             this.dispatch({type: EventType.ADD_EMPLOYEE, data: employee });
         });
-        // let locations = data.locations;
-
-        // for (const location in locations) {
-        //     if (locations.hasOwnProperty(location)) {
-        //         const data = locations[location];
-        //         this.dispatch({type: EventType.ADD_DESK, data: data });
-        //     }
-        // }
     }
 }

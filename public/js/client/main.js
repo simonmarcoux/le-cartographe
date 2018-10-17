@@ -6,6 +6,7 @@ import AbstractDispatcher from "./AbstractDispatcher.js";
 import CardsManager from "./InfoCard.js";
 import Search from "./Search.js";
 import EmployeeManager from "./Employees.js";
+import Marker from "./Marker.js";
 
 export default class Main extends AbstractDispatcher {
     constructor() {
@@ -15,6 +16,7 @@ export default class Main extends AbstractDispatcher {
         this.employerManager = new EmployeeManager();
         this.deskManager = new DesksManager();
         this.cardsManager = new CardsManager();
+        this.marker = new Marker();
 
         this.search = new Search();
 
@@ -28,7 +30,6 @@ export default class Main extends AbstractDispatcher {
         })
         
         // Triggered after load
-        // this.map.addListener(EventType.ADD_DESK, this.deskManager.addDesk);
         this.map.addListener(EventType.ADD_EMPLOYEE, this.employerManager.addEmployee);
         this.employerManager.addListener(EventType.ADD_EMPLOYEE, this.deskManager.addDesk);
 
@@ -37,8 +38,6 @@ export default class Main extends AbstractDispatcher {
         this.deskManager.addListener(EventType.CLICK, this.cardsManager.update);
         
         // Events trigger on search
-        // this.search.addListener(EventType.SEARCH, this.deskManager.getDesksFromSearch);
-        // this.search.addListener(EventType.SEARCH, this.map.clearHighlight);
         this.search.addListener(EventType.SEARCH, (e) => {
             this.map.clearHighlight();
             this.deskManager.getDesksFromSearch(e);
@@ -49,4 +48,3 @@ export default class Main extends AbstractDispatcher {
 }
 
 new Main();
-

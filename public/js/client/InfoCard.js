@@ -50,6 +50,7 @@ class EmployeeCard {
         let template = `
             <div class="card--item">
                 ${this.infos.name}, ${this.infos.group}, ${this.infos.job}
+                <span data-card="remove">X</span>
             </div>
         `;
 

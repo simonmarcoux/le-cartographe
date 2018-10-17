@@ -22,10 +22,8 @@ export default class EmployeeManager extends AbstractDispatcher {
     }
 }
 
-export class Employee extends AbstractDispatcher {
+export class Employee {
     constructor(config) {
-        super(); 
-
         this.id = config.data.pathID;
         this.name = config.data.name;
         this.group = config.data.groupe.label;
