@@ -39,6 +39,8 @@ path.active {
     min-width: 600px;
     width: 600px;
     overflow: hidden;
+    position: sticky;
+    top: 0;
 }
  
 .map-wrp svg {
@@ -55,4 +57,39 @@ path.active {
 .details-inner {
     position: sticky;
     top: 0;
+}
+
+.cards {
+    padding: 0;
+}
+.cards li {
+    list-style: none;
+    display: block;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom:2px solid rgba(255, 255, 255, 0.2);
+}
+
+input {
+    background: none;
+    border: none;
+    border-bottom: 2px solid rgba(255,255,255, 0.2);
+    font-size: 20px;
+    font-family: 'oswald';
+    /* text-transform: uppercase; */
+    color: white;
+    width: 100%;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 0.6; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: white;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: white;
 }

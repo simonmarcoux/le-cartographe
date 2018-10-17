@@ -10,6 +10,8 @@ export default class Map extends AbstractDispatcher {
 
         this.handlePathClick(this.getPaths());
         this.initZoomHandler();
+
+        this.clearHighlight = this.clearHighlight.bind(this);
     }
 
     getMapName(name) {
@@ -25,16 +27,17 @@ export default class Map extends AbstractDispatcher {
             const path = paths[i];
             path.addEventListener('click', e => {
                 if (e.currentTarget.classList.contains('active')) return;
-                
-                const activeEl = this.map.querySelector('.active');
-                if (activeEl && activeEl !== e.currentTarget) {
-                    activeEl.classList.remove('active');
-                }
-                e.currentTarget.classList.toggle('active');
-                
-                // let isActive = e.currentTarget.classList.contains('active');
+                this.clearHighlight();
+                e.currentTarget.classList.add('active');
                 this.dispatch({ type: EventType.CLICK, el: e.currentTarget });
             }); 
+        }
+    }
+
+    clearHighlight() {
+        const activeEls = this.map.querySelectorAll('.active');
+        for (let i = 0; i < activeEls.length; i++) {
+            activeEls[i].classList.remove('active');
         }
     }
 

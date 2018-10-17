@@ -24,11 +24,9 @@ export default class CardsManager {
     }
     
     updateFromSearch(e) {
-        console.log('update from search', e);
-        this.addCard(e.users[0]);
-        // e.users.forEach(user => {
-        //     this.addCard(user);
-        // })
+        e.users.forEach(user => {
+            this.addCard(user);
+        })
     }
     
     addCard(user) {
@@ -60,7 +58,7 @@ class EmployeeCard {
             </div>
         `;
 
-        let item = document.createElement('div');
+        let item = document.createElement('li');
         item.innerHTML = template;
         document.querySelector('.cards').appendChild(item);
     }

@@ -8,6 +8,7 @@ export class DesksManager extends AbstractDispatcher {
         super();
 
         this.desksArr = [];
+        this.desksSearched = [];
 
         // Bind methods to class
         this.addDesk = this.addDesk.bind(this);
@@ -45,22 +46,40 @@ export class DesksManager extends AbstractDispatcher {
     }
     
     getDesksFromSearch(e) {
-        let searchResults = e.search;
-
         this.dispatch({type: EventType.CLEAR });
-        searchResults.forEach(desk => {
-            if (e.pathID !== null) this.getDeskFromID(desk.pathID, EventType.SEARCH);
+
+        this.desksSearched.length = 0;
+        let searchResults = e.search;
+        console.log('search results', e);
+        
+        searchResults.forEach(user => {
+            if (user.pathID === null) return;
+            if (this.desksSearched.indexOf(user.pathID) > -1) {
+                return;
+            } else { 
+                this.getDeskFromID(user.pathID, EventType.SEARCH, true);
+                this.desksSearched.push(user.pathID);
+            }
         });
+
+        // searchResults.forEach(desk => {
+        //     console.log('search results', desk, e);
+        //     if (e.pathID !== null) this.getDeskFromID(desk.pathID, EventType.SEARCH);
+        // });
     }
 
-    getDeskFromID(id, eventType) {
+    getDeskFromID(id, eventType, highlight = false) {
         this.desksArr.forEach(desk => {
-            // console.log('searching,', desk, id);
             let deskID = desk.id;
             if (deskID.indexOf(id, 0) !== -1) {
                 this.dispatch({type: eventType, users: desk.users });
+                
+                if (highlight) {
+                    desk.el.classList.add('active');
+                }
                 return desk;
             }
+
         });
     }
 
@@ -79,6 +98,10 @@ export class Desk extends AbstractDispatcher {
 
         // this.getUsersFromData();
         document.querySelector('svg #' + this.id).classList.add('has-users');
+    }
+
+    get el() { 
+        return document.querySelector('svg #' + this.id);
     }
 
     // getUsersFromData() {
