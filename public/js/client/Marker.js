@@ -1,20 +1,50 @@
 import { Vec2 } from "./Math.js";
 
+// export class MarkerManager {
+//     constructor() {
+        
+//     }
+// }
+
 export default class Marker {
     constructor() {
-        this.marker = null;
+        // this._marker = null;
 
         // this.active = false;
-        this.origin = { x: 1155, y: 220 };
+        this.origin = new Vec2(1155, 220); //{ x: 1155, y: 220 };
+        this.posFromOrigin = new Vec2(0, 0);
         this.pos = { x: 0, y: 0 };
 
-        this.ratioPixelMeter = 10; // 10:1;
+        this.scale = 10; // 10:1;
 
         this.svg = document.querySelector("svg");
         this.rect = this.svg.querySelector("path");
         this.pt = this.svg.createSVGPoint();
+        this.circle = this.svg.querySelector('circle');
 
-        this.svg.addEventListener("mousedown", this.handleClick.bind(this), false);
+        
+        this.addBtn = document.querySelector('[data-ui="add-marker"]');
+        this.removeBtn = document.querySelector('[data-ui="remove-marker"]');
+        
+        this.handleClick = this.handleClick.bind(this);
+
+        this.addBtn.addEventListener('click', e => {
+            this.svg.addEventListener("mousedown", this.handleClick);
+        });
+
+        this.removeBtn.addEventListener('click', e => {
+            this.removeAllMarkers();
+        });
+
+        this.input = document.querySelector('input')
+    }
+
+    addMarker() {
+        this.circle.style.display = "block";
+    }
+    
+    removeMarker() {
+        this.circle.style.display = "none";
     }
 
     handleClick(e) {
@@ -22,15 +52,19 @@ export default class Marker {
         // https://stackoverflow.com/a/42711775
         const cursorpt = this.cursorPoint(e, this.rect);
         this.pos = new Vec2(cursorpt.x, cursorpt.y);
-        console.log("(" + cursorpt.x + ", " + cursorpt.y + ")");
+        // console.log("(" + cursorpt.x + ", " + cursorpt.y + ")");
         
-        let circle = this.svg.querySelector('circle');
-        circle.setAttribute('cx', this.pos.x);
-        circle.setAttribute('cy', this.pos.y);
-        circle.style.display = "block";
-    }
+        this.updateCircle(this.pos);
+        this.addMarker();
 
-    updateCircle(x, y);
+        console.log()
+        this.svg.removeEventListener("mousedown", this.handleClick);
+    }
+    
+    updateCircle(pos) {
+        this.circle.setAttribute('cx', this.pos.x);
+        this.circle.setAttribute('cy', this.pos.y);
+    }
         
     cursorPoint(e, element) {
         this.pt.x = e.clientX; 
@@ -49,38 +83,12 @@ export default class Marker {
     }
 
     getPosFromOrigin(pos = {x: 12.5, y: 2}) {
-        
+        this.posFromOrigin.x = this.origin.x + pos.x;
+        this.posFromOrigin.y = this.origin.y + pos.y;
+
+        this.updateCircle(this.posFromOrigin);
+        return this.posFromOrigin;
     }
-
-    // add point on map at 
-    // add(coords) {
-    //     this.pos = coords;
-    //     let marker = this.create(this.pos);
-    //     app.stage.addChild(marker);
-    // }
-
-    // // create pixi red circle
-    // create(app, coords) {
-    //     this.marker = new PIXI.Graphics();
-    //     this.marker.beginFill(0x5cafe2);
-    //     this.marker.drawCircle(0, 0, 40);
-    //     this.marker.x = coords.x;
-    //     this.marker.y = coords.y;
-
-    //     return this.marker;
-    // }
-
-    // set origin(el) {
-    //     this.originCoords = { x: 0, y: 0 };
-    // }
-
-    // set active(value) {
-    //     this.active = value;
-    // }
-
-    // set marker(coords) {
-    //     this.add(coords)
-    // }
 }
 
 
