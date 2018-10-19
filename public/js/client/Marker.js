@@ -25,6 +25,7 @@ export default class Marker {
         
         this.addBtn = document.querySelector('[data-ui="add-marker"]');
         this.removeBtn = document.querySelector('[data-ui="remove-marker"]');
+        this.form = document.querySelector('.from-origin');
         
         this.handleClick = this.handleClick.bind(this);
 
@@ -32,11 +33,19 @@ export default class Marker {
             this.svg.addEventListener("mousedown", this.handleClick);
         });
 
-        this.removeBtn.addEventListener('click', e => {
-            this.removeAllMarkers();
-        });
+        // this.removeBtn.addEventListener('click', e => {
+        //     this.removeAllMarkers();
+        // });
 
-        this.input = document.querySelector('input')
+        this.form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            console.log(e);
+            // console.log(this.form.querySelector('input'));
+            let x = this.form.querySelector('.coord-x').value;
+            let y = this.form.querySelector('.coord-y').value;
+            this.getPosFromOrigin(new Vec2(x, y));
+        })
     }
 
     addMarker() {

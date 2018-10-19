@@ -54377,8 +54377,10 @@
 				<div class="from-origin-wrp">
 					<h3>Trouver un point à partir d'une origine</h3>
 					<form action="" class="from-origin">
-						<div class="input-wrapper">
-							<input type="text" name="coords" id="coords" placeholder="Coordonnés">
+						<label for="coord-x">Coordonnées (m)</label>
+						<div class="input-wrapper" style="display: flex;">
+							<input type="text" name="coord-x" class="coord-x" id="coord-x" placeholder="x (m)">
+							<input type="text" name="coord-y" class="coord-y" id="coord-y" placeholder="y (m)">
 						</div>
 					</form>
 					<p>Note: L'origine est actuellement à un point du GEN</p>
@@ -54387,8 +54389,8 @@
 				<div class="from-origin-wrp">
 					<h3>Ajouter un marqueur sur la carte</h3>
 					<button data-ui="add-marker">Placer un marqueur</button>
-					{# <button data-ui="add-marker">Ajouter</button>
-					<button data-ui="remove-marker">Enlever</button> #}
+					 <!--button data-ui="add-marker">Ajouter</button>
+					<button data-ui="remove-marker">Enlever</button-->
 				</div>
 			</div>
 		</div>
