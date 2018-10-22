@@ -71,6 +71,19 @@ path.active {
     border-bottom:2px solid rgba(255, 255, 255, 0.2);
 }
 
+.card--item {
+    position: relative;
+}
+
+.card--item span {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: none;
+}
+
 input {
     background: none;
     border: none;

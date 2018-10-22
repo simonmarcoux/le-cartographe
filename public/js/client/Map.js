@@ -7,24 +7,21 @@ export default class Map extends AbstractDispatcher {
         super();
 
         this.map = document.querySelector('.map-wrp .svg');
+        this.paths = this.map.querySelectorAll('path');
 
-        this.handlePathClick(this.getPaths());
+        this.handlePathClick();
         this.initZoomHandler();
 
         this.clearHighlight = this.clearHighlight.bind(this);
     }
 
-    getMapName(name) {
+    setMapName(name) {
         document.querySelector('[data-ui="map-name"]').innerHTML = name;
     }
-    
-    getPaths() {
-        return this.map.querySelectorAll('path');
-    }
-    
-    handlePathClick(paths) {
-        for (let i = 0; i < paths.length; i++) {
-            const path = paths[i];
+
+    handlePathClick() {
+        for (let i = 0; i < this.paths.length; i++) {
+            const path = this.paths[i];
             path.addEventListener('click', e => {
                 if (e.currentTarget.classList.contains('active')) return;
                 this.clearHighlight();

@@ -83,22 +83,25 @@ export class Desk extends AbstractDispatcher {
     constructor(config) {
         super();
 
-        this.config = config;
-        this.id = this.config.id;
-        this.users = [this.config];
+        this._config = config;
+        this._id = this._config.id;
+        this._users = [this._config];
 
-        document.querySelector('svg #' + this.id).classList.add('has-users');
+        document.querySelector('svg #' + this._id).classList.add('has-users');
+    }
+    
+    addUser(user) {
+        this._users.push(user);
     }
 
     get el() { 
-        return document.querySelector('svg #' + this.id);
+        return document.querySelector('svg #' + this._id);
     }
 
-    getUsers() {
-        return this.users;
+    get id() {
+        return this._id;
     }
-
-    addUser(user) {
-        this.users.push(user);
+    get users() {
+        return this._users;
     }
 }

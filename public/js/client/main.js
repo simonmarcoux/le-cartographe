@@ -25,7 +25,7 @@ export default class Main extends AbstractDispatcher {
         .then((data) => {
             // json is loaded, get all items
             this.map.placeElements(data);
-            // this.map.getMapName(data.mapName);
+            // this.map.setMapName(data.mapName);
             this.search.init(document.querySelector('.search'), data);
         })
         

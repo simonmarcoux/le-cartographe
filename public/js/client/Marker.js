@@ -8,14 +8,11 @@ import { Vec2 } from "./Math.js";
 
 export default class Marker {
     constructor() {
-        // this._marker = null;
-
-        // this.active = false;
-        this.origin = new Vec2(1155, 220); //{ x: 1155, y: 220 };
+        this.origin = new Vec2(1155, 220); // { x: 1155, y: 220 };
         this.posFromOrigin = new Vec2(0, 0);
         this.pos = { x: 0, y: 0 };
 
-        this.scale = 10; // 10:1;
+        this.scale = 12;
 
         this.svg = document.querySelector("svg");
         this.rect = this.svg.querySelector("path");
@@ -40,11 +37,12 @@ export default class Marker {
         this.form.addEventListener('submit', e => {
             e.preventDefault();
 
-            console.log(e);
-            // console.log(this.form.querySelector('input'));
-            let x = this.form.querySelector('.coord-x').value;
-            let y = this.form.querySelector('.coord-y').value;
+            const x = parseInt(this.form.querySelector('.coord-x').value) * this.scale;
+            const y = parseInt(this.form.querySelector('.coord-y').value) * this.scale;
+            
             this.getPosFromOrigin(new Vec2(x, y));
+            this.updateCircle(this.posFromOrigin);
+            this.addMarker();
         })
     }
 
@@ -61,18 +59,16 @@ export default class Marker {
         // https://stackoverflow.com/a/42711775
         const cursorpt = this.cursorPoint(e, this.rect);
         this.pos = new Vec2(cursorpt.x, cursorpt.y);
-        // console.log("(" + cursorpt.x + ", " + cursorpt.y + ")");
         
         this.updateCircle(this.pos);
         this.addMarker();
 
-        console.log()
         this.svg.removeEventListener("mousedown", this.handleClick);
     }
     
     updateCircle(pos) {
-        this.circle.setAttribute('cx', this.pos.x);
-        this.circle.setAttribute('cy', this.pos.y);
+        this.circle.setAttribute('cx', pos.x);
+        this.circle.setAttribute('cy', pos.y);
     }
         
     cursorPoint(e, element) {
@@ -87,16 +83,12 @@ export default class Marker {
 
     transformMeterToPx(values) {
         let newValues = { x: values.x *= 10, y: values.y *= 10 }
-
         return newValues;
     }
 
     getPosFromOrigin(pos = {x: 12.5, y: 2}) {
         this.posFromOrigin.x = this.origin.x + pos.x;
         this.posFromOrigin.y = this.origin.y + pos.y;
-
-        this.updateCircle(this.posFromOrigin);
-        return this.posFromOrigin;
     }
 }
 

@@ -5,20 +5,20 @@ export default class EmployeeManager extends AbstractDispatcher {
     constructor() {
         super();
 
-        this.list = [];
+        this._list = [];
 
         this.addEmployee = this.addEmployee.bind(this);
     }
 
     addEmployee(config) {
         let employee = new Employee(config);
-        this.list.push(employee);
+        this._list.push(employee);
 
         this.dispatch({ type: EventType.ADD_EMPLOYEE, employee: employee, id: employee.id });
     }
 
-    getList() {
-        return this.list;
+    get list() {
+        return this._list;
     }
 }
 
