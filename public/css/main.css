@@ -37,7 +37,7 @@ path.active {
     border: 3px solid black;
     height: 100%;
     min-width: 600px;
-    width: 600px;
+    width: 50%;
     overflow: hidden;
     position: sticky;
     top: 0;
@@ -106,4 +106,10 @@ input {
 
 ::-ms-input-placeholder { /* Microsoft Edge */
     color: white;
+}
+
+.custom-path {
+    fill: none !important;
+    stroke: red;
+    stroke-width: 3px;
 }

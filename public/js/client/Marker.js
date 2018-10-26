@@ -18,17 +18,34 @@ export default class Marker {
         this.rect = this.svg.querySelector("path");
         this.pt = this.svg.createSVGPoint();
         this.circle = this.svg.querySelector('circle');
+        this.path = this.svg.querySelector('.custom-path');
+        this.pathCoords = [];
 
         
         this.addBtn = document.querySelector('[data-ui="add-marker"]');
         this.removeBtn = document.querySelector('[data-ui="remove-marker"]');
+        this.pathBtn = document.querySelector('[data-ui="add-path"]');
+        this.endPathBtn = document.querySelector('[data-ui="end-path"]');
         this.form = document.querySelector('.from-origin');
         
         this.handleClick = this.handleClick.bind(this);
+        this.createPath = this.createPath.bind(this);
 
         this.addBtn.addEventListener('click', e => {
             this.svg.addEventListener("mousedown", this.handleClick);
         });
+
+        this.pathBtn.addEventListener('click', e => {
+            this.svg.addEventListener("mousedown", this.createPath);
+        });
+
+        this.endPathBtn.addEventListener('click', e => {
+            this.svg.removeEventListener("mousedown", this.createPath);
+        });
+        
+        // this.pathBtn.addEventListener('click', e => {
+        //     this.path.classList.add('active');
+        // });
 
         // this.removeBtn.addEventListener('click', e => {
         //     this.removeAllMarkers();
@@ -43,7 +60,9 @@ export default class Marker {
             this.getPosFromOrigin(new Vec2(x, y));
             this.updateCircle(this.posFromOrigin);
             this.addMarker();
-        })
+        });
+
+        // this.coordsToPath();
     }
 
     addMarker() {
@@ -89,6 +108,48 @@ export default class Marker {
     getPosFromOrigin(pos = {x: 12.5, y: 2}) {
         this.posFromOrigin.x = this.origin.x + pos.x;
         this.posFromOrigin.y = this.origin.y + pos.y;
+    }
+
+    createPath(e) {
+        let pt = this.svg.createSVGPoint();
+        pt.x = e.clientX;
+        pt.y = e.clientY;
+        let svgPoint =  pt.matrixTransform(this.rect.getScreenCTM().inverse());
+        // let coord = new Vec2(e.clientX, e.clientY);
+
+        this.pathCoords.push(svgPoint);
+        // this.pathCoords.push(coord);
+        console.log(this.pathCoords);
+        this.coordsToPath(this.pathCoords);
+    }
+
+    coordsToPath(coords = [ new Vec2(1000, 200), new Vec2(1000, 170), new Vec2(1080, 170), new Vec2(1080, 350), new Vec2(1100, 350)]) {
+        const startPoint = `M ${coords[0].x}, ${coords[0].y} `;
+        let linesTo = '';
+        let lastCoords;
+    
+        coords.forEach((coord, index) => {
+            if (index === 0) return;
+
+            let L;
+            let newCoords;
+            index === 1 ? L = 'L' : L = 'l';
+            if (index === 1) {
+                newCoords = coord;
+            } else {
+                newCoords = { x: coord.x - lastCoords.x, y :  coord.y - lastCoords.y };
+            }
+
+            const string = `${L} ${newCoords.x} ${newCoords.y} `;
+            linesTo += string;
+
+            lastCoords = coord;
+        });
+    
+        let path = startPoint + linesTo;
+        console.log(path);
+    
+        document.querySelector('.custom-path').setAttribute('d', path);
     }
 }
 
