@@ -5,3 +5,6 @@
 `npm start`
 
 `localhost:5000`
+
+- SVG: https://github.com/ariutta/svg-pan-zoom
+- Search http://fusejs.io/
